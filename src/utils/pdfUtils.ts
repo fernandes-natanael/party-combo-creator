@@ -1,15 +1,8 @@
 
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import { Package, Product } from './localStorage';
 import { calculatePackageTotal } from './csvUtils';
-
-// Extend jsPDF type to include autoTable
-declare module 'jspdf' {
-  interface jsPDF {
-    autoTable: (options: any) => jsPDF;
-  }
-}
 
 export const exportPackagesToPDF = (packages: Package[], products: Product[]): void => {
   const doc = new jsPDF();
@@ -53,7 +46,7 @@ export const exportPackagesToPDF = (packages: Package[], products: Product[]): v
       ];
     });
     
-    doc.autoTable({
+    autoTable(doc, {
       head: [['Product', 'Quantity', 'Unit Price', 'Subtotal']],
       body: tableData,
       startY: yPosition,
